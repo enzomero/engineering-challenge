@@ -1,0 +1,14 @@
+server:
+  port: ${SERVICE_PORT:8001}
+  servlet:
+    context-path: ${CONTEXT_PATH:/gate}
+
+spring:
+  application:
+    name: pom.artifactId
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP:localhost:29092}
+    topic-create: ${TOPIC_ADD_TO_DB:create}
+    topic-edit: ${TOPIC_ADD_TO_DB:state_machine}
+  api:
+    url: ${USER_STOCK_API:http://127.0.0.1:8002/api/user}

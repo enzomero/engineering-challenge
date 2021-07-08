@@ -1,0 +1,114 @@
+version: '3.7'
+
+networks:
+  private:
+
+volumes:
+  kafka-data:
+  user_stock:
+
+services:
+  status_gate:
+    hostname: status_gate
+    build: ../status_gate
+    image: elc-services:status_gate
+    environment:
+      - SERVICE_PORT=8001
+      - CONTEXT_PATH=/gate
+      - BOOTSTRAP=kafka:9092
+      - TOPIC_ADD_TO_DB=create
+      - TOPIC_EDIT_ID_DB=state_machine
+      - USER_STOCK_API=http://127.0.0.1:8002/api/user
+    ports:
+      - "8001:8001"
+    depends_on:
+      - kafka
+    networks:
+      - private
+    restart: on-failure:3
+#      add actuators
+
+  status_api:
+    hostname: status_api
+    build: ../status_api
+    image: elc-services:status_api
+    environment:
+      - SERVICE_PORT=8002
+      - CONTEXT_PATH=/api
+      - BOOTSTRAP=kafka:9092
+      - DATASOURCE_URL=jdbc:postgresql://user_stock:5432/users
+    ports:
+      - "8002:8002"
+    depends_on:
+      - kafka
+      - user_stock
+    networks:
+      - private
+    restart: on-failure:3
+  #      add actuators
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+    networks:
+      - private
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      APP_KAFKA_TOPICS: "create:1:1,state_machine:1:1,save:1:1"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    depends_on:
+      - zookeeper
+      - volumes-manager
+    networks:
+      - private
+
+  user_stock:
+    container_name: user_stock
+    image: postgres:12-alpine
+    ports:
+      - "127.0.0.1:54321:5432"
+    expose:
+      - 54321
+    volumes:
+      - user_stock:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=123456789
+      - POSTGRES_PASSWORD=123456789
+      - POSTGRES_DB=users
+    restart: unless-stopped
+    depends_on:
+      - volumes-manager
+    networks:
+      - private
+
+  volumes-manager:
+    restart: "no"
+    image: busybox:1.32.1
+    volumes:
+    - kafka-data:/v-kafka
+    - user_stock:/v-db
+    command:
+      - sh
+      - -c
+      - |
+        set -e
+
+        chown $$2:$$2 "$$1" chmod $$3 "$$1" v-kafka 1000 0777
+        chown $$2:$$2 "$$1" chmod $$3 "$$1" v-db 1000 0777
+
+        exit 0

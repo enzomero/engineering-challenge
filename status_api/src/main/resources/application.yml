@@ -1,0 +1,18 @@
+server:
+  port: ${SERVICE_PORT:8002}
+  servlet:
+    context-path: ${CONTEXT_PATH:/api}
+
+spring:
+  application:
+    name: pom.artifactId
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATASOURCE_URL:jdbc:postgresql://127.0.0.1:54321/users}
+    username: 123456789
+    password: 123456789
+  jpa:
+    hibernate:
+      ddl-auto: update
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP:localhost:29092}
