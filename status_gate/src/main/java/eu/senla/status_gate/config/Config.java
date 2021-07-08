@@ -1,5 +1,6 @@
 package eu.senla.status_gate.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.status_gate.dto.UserDto;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -43,7 +44,10 @@ public class Config {
 
     @Bean
     public ObjectMapper objectMapper(){
-        return new ObjectMapper();
+        final ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        objectMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
+        return objectMapper;
     }
 
     @Bean

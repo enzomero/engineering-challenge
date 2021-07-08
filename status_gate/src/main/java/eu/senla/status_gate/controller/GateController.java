@@ -1,7 +1,6 @@
 package eu.senla.status_gate.controller;
 
 import eu.senla.status_gate.dto.ChangeRequestDto;
-import eu.senla.status_gate.dto.PersonalInfoDto;
 import eu.senla.status_gate.dto.UserDto;
 import eu.senla.status_gate.service.api.StateService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +15,12 @@ public class GateController {
     private final StateService stateService;
 
     @PostMapping("/user")
-    public UserDto addUser(final @RequestBody PersonalInfoDto personalInfoDto) {
+    public UserDto addUser(final @RequestBody String personalInfoDto) {
         return stateService.addUser(personalInfoDto);
     }
 
-    @PutMapping("/user/{uuid}")
-    public Mono<UserDto> editUser(final @PathVariable("uuid") String uuid, final @RequestBody ChangeRequestDto changeRequestDto) {
-        return stateService.edit(uuid, changeRequestDto);
+    @PutMapping("/user")
+    public Mono<UserDto> editUser(final @RequestBody ChangeRequestDto changeRequestDto) {
+        return stateService.edit(changeRequestDto).checkpoint();
     }
 }

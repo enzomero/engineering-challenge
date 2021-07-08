@@ -1,0 +1,8 @@
+server:
+  port: ${SERVICE_PORT:8003}
+
+spring:
+  application:
+    name: firebase-adapter
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP:localhost:29092}

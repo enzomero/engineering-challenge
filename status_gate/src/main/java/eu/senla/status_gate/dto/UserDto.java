@@ -1,36 +1,42 @@
 package eu.senla.status_gate.dto;
 
-import eu.senla.status_gate.dto.api.State;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.UUID;
 
 @Getter
 @ToString
-@Builder
+@EqualsAndHashCode
+@NoArgsConstructor
 public class UserDto {
     private UUID uuid;
-    private State.Value state;
-    private PersonalInfoDto user;
+    private String user;
+    private UserState userState = UserState.ADDED;
+    private String contractDto;
+    private String extraDataDto;
+    private boolean approver;
 
-    private ContractDto contractDto;
-    private ExtraDataDto extraDataDto;
-    private PersonalInfoDto approver;
+    @Builder
+    private UserDto(final UUID uuid, final String user) {
+        this.uuid = uuid;
+        this.user = user;
+    }
 
-    public UserDto setContractDto(final ContractDto contractDto) {
+    public UserDto setContractDto(final String contractDto) {
         this.contractDto = contractDto;
+        this.userState = userState.setState(this);
         return this;
     }
 
-    public UserDto setExtraDataDto(final ExtraDataDto extraDataDto) {
+    public UserDto setExtraDataDto(final String extraDataDto) {
         this.extraDataDto = extraDataDto;
+        this.userState = userState.setState(this);
         return this;
     }
 
-    public UserDto setApprover(final PersonalInfoDto approver) {
+    public UserDto setApprover(final boolean approver) {
         this.approver = approver;
+        this.userState = userState.setState(this);
         return this;
     }
 

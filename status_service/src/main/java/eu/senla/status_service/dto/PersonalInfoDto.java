@@ -1,12 +1,9 @@
-package eu.senla.status_gate.dto;
+package eu.senla.status_service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -14,10 +11,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class PersonalInfoDto {
     //Container for personal information
-    @NotBlank(message = "firstName cannot be blank")
     private String firstName;
-    @NotBlank(message = "secondName cannot be blank")
     private String secondName;
-    @NotNull(message = "age cannot be empty")
     private Integer age;
 }

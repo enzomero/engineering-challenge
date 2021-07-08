@@ -1,4 +1,4 @@
-package eu.senla.status_api.dto;
+package eu.senla.status_service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContractDto {
-    //Container for contract related data
-    long startDate;
-    long term;
-    boolean isSigned;
+public class ChangeRequestDto {
+    private ExtraDataDto extraDataDto;
+    private ContractDto contractDto;
 }

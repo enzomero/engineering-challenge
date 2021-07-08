@@ -1,5 +1,6 @@
 package eu.senla.status_api.model;
 
+import eu.senla.status_api.dto.UserState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ public class Profile {
     private long id;
     @Column(name = "uuid", unique = true, nullable = false)
     private String uuid;
-    private String state;
+    private String userState;
     @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
     private PersonalInfo user;
 

@@ -1,4 +1,4 @@
-package eu.senla.status_api.dto;
+package eu.senla.status_service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ExtraDataDto {
     //container for extra data for statistic
-    @NonNull
     private String citizenOf;
     private List<String> knownLanguages;
 }

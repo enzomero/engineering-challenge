@@ -25,6 +25,7 @@ public class Config {
     public ObjectMapper objectMapper(){
         final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        objectMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
         return objectMapper;
     }
 

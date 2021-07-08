@@ -1,4 +1,4 @@
-package eu.senla.status_gate.dto;
+package eu.senla.status_service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

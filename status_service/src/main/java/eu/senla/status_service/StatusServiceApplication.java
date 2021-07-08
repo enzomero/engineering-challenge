@@ -1,4 +1,4 @@
-package eu.senla.status_api;
+package eu.senla.status_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
