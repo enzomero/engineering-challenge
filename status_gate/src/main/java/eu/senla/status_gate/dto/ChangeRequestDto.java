@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ChangeRequestDto {
     private UUID uuid;
-    private String extraDataDto;
-    private String contractDto;
+    private String extraData;
+    private String contract;
     private boolean approver;
 }

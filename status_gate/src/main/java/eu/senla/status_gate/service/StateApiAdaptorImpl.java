@@ -29,9 +29,9 @@ public class StateApiAdaptorImpl implements StateApiAdaptor {
                 .uri(uri)
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError, ClientResponse::createException)
-                .bodyToMono(UserDto.class);
+                .bodyToMono(UserDto.class)
 //                .metrics() add metrics
-//                .onErrorResume(WebClientResponseException.class, e -> Mono.error(new SequenceException("Not found", uuid)))
-//                .onErrorResume(Exception.class, throwable -> Mono.error(new SequenceException("The resource serve unreachable", uuid)));
+                .onErrorResume(WebClientResponseException.class, e -> Mono.error(new SequenceException("Not found", uuid)))
+                .onErrorResume(Exception.class, throwable -> Mono.error(new SequenceException("The resource serve unreachable", uuid)));
     }
 }

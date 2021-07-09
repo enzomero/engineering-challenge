@@ -9,24 +9,24 @@ public enum UserState {
     ADDED{
         @Override
         public UserState setState(final UserDto userDto){
-            return Objects.nonNull(userDto.getExtraDataDto())
+            return Objects.nonNull(userDto.getExtraData())
                     ? IN_CHECK.setState(userDto) : this;
         }
     },
     IN_CHECK{
         @Override
         public UserState setState(final UserDto userDto){
-            return userDto.isApprover() &&
-                    Objects.nonNull(userDto.getExtraDataDto())
+            return userDto.getApprover() != null &&
+                    userDto.getApprover() &&
+                    userDto.getUserState().equals(IN_CHECK)
                     ? APPROVED : this;
         }
     },
     APPROVED{
         @Override
         public UserState setState(final UserDto userDto){
-            return Objects.nonNull(userDto.getContractDto()) &&
-                    userDto.isApprover() &&
-                    Objects.nonNull(userDto.getExtraDataDto())
+            return Objects.nonNull(userDto.getContract()) &&
+                    userDto.getUserState().equals(APPROVED)
                     ? ACTIVE : this;
         }
     },

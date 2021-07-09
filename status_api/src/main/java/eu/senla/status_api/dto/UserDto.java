@@ -10,31 +10,37 @@ import java.util.UUID;
 @NoArgsConstructor
 public class UserDto {
     private UUID uuid;
-    private String user;
+    private String personalInfo;
     private UserState userState = UserState.ADDED;
-    private String contractDto;
-    private String extraDataDto;
-    private boolean approver;
+    private String contract;
+    private String extraData;
+    private Boolean approver;
 
     @Builder
-    private UserDto(final UUID uuid, final String user) {
+    private UserDto(final UUID uuid, final String personalInfo) {
         this.uuid = uuid;
-        this.user = user;
+        this.personalInfo = personalInfo;
     }
 
-    public UserDto setContractDto(final String contractDto) {
-        this.contractDto = contractDto;
+    public UserDto setContract(final String contract) {
+        if (contract == null)
+            return this;
+        this.contract = contract;
         this.userState = userState.setState(this);
         return this;
     }
 
-    public UserDto setExtraDataDto(final String extraDataDto) {
-        this.extraDataDto = extraDataDto;
+    public UserDto setExtraData(final String extraData) {
+        if (extraData == null)
+            return this;
+        this.extraData = extraData;
         this.userState = userState.setState(this);
         return this;
     }
 
-    public UserDto setApprover(final boolean approver) {
+    public UserDto setApprover(final Boolean approver) {
+        if (approver == null)
+            return this;
         this.approver = approver;
         this.userState = userState.setState(this);
         return this;

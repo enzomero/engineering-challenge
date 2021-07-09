@@ -12,10 +12,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status test\", function () {",
-							"    pm.response.to.have.status(200);",
-							"    pm.response.to.be.ok;",
-							"    pm.response.to.be.json;",
+							"pm.test(\"Status test\", () => {",
+							"    const responseJson = pm.response.json()",
+							"    pm.expect(responseJson.userState).to.eql(\"ADDED\");",
 							"});"
 						],
 						"type": "text/javascript"
@@ -50,13 +49,27 @@
 			"response": []
 		},
 		{
-			"name": "add extdadate",
+			"name": "add extra data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", () => {",
+							"    const responseJson = pm.response.json()",
+							"    pm.expect(responseJson.userState).to.eql(\"IN_CHECK\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"uuid\": \"75277453-f0ed-47be-b9ce-8bff044d70e4\",\n    \"extraDataDto\": \"somespecific data\"\n}",
+					"raw": "{\n    \"uuid\": \"116d096c-235b-4229-95b8-085edc491aab\",\n    \"extraData\": \"somespecific data\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -79,13 +92,27 @@
 			"response": []
 		},
 		{
-			"name": "add data extradata and contract",
+			"name": "add approver",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", () => {",
+							"    const responseJson = pm.response.json()",
+							"    pm.expect(responseJson.userState).to.eql(\"APPROVED\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"uuid\": \"71527f54-534e-47c1-be43-63df4394794a\",\n    \"extraDataDto\": \"somespecific data\",\n    \"contractDto\": \"contract data\"\n}",
+					"raw": "{\n    \"uuid\": \"116d096c-235b-4229-95b8-085edc491aab\",\n    \"approver\": true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -108,13 +135,27 @@
 			"response": []
 		},
 		{
-			"name": "add all data",
+			"name": "add contract",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", () => {",
+							"    const responseJson = pm.response.json()",
+							"    pm.expect(responseJson.userState).to.eql(\"ACTIVE\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"uuid\": \"71527f54-534e-47c1-be43-63df4394794a\",\n    \"extraDataDto\": \"somespecific data\",\n    \"contractDto\": \"contract data\",\n    \"approver\": true\n}",
+					"raw": "{\n    \"uuid\": \"116d096c-235b-4229-95b8-085edc491aab\",\n    \"contract\": \"contract data\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -142,7 +183,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8002/api/user/75277453-f0ed-47be-b9ce-8bff044d70e4",
+					"raw": "http://127.0.0.1:8002/api/user/b2d03429-cdd1-437b-aca4-e97ceb065721",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -154,7 +195,7 @@
 					"path": [
 						"api",
 						"user",
-						"75277453-f0ed-47be-b9ce-8bff044d70e4"
+						"b2d03429-cdd1-437b-aca4-e97ceb065721"
 					]
 				}
 			},

@@ -8,17 +8,17 @@ volumes:
   user_stock:
 
 services:
-  status_gate:
-    hostname: status_gate
+  status-gate:
+    hostname: status-gate
     build: ../status_gate
-    image: elc-services:status_gate
+    image: elc-services:status-gate
     environment:
       - SERVICE_PORT=8001
       - CONTEXT_PATH=/gate
       - BOOTSTRAP=kafka:9092
       - TOPIC_ADD_TO_DB=create
       - TOPIC_EDIT_ID_DB=state_machine
-      - USER_STOCK_API=http://127.0.0.1:8002/api/user
+      - USER_STOCK_API=http://status-api:8002/api/user
     ports:
       - "8001:8001"
     depends_on:
@@ -28,10 +28,10 @@ services:
     restart: on-failure:3
 #      add actuators
 
-  status_api:
-    hostname: status_api
+  status-api:
+    hostname: status-api
     build: ../status_api
-    image: elc-services:status_api
+    image: elc-services:status-api
     environment:
       - SERVICE_PORT=8002
       - CONTEXT_PATH=/api

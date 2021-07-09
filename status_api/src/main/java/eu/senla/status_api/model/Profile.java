@@ -1,9 +1,9 @@
 package eu.senla.status_api.model;
 
-import eu.senla.status_api.dto.UserState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -15,18 +15,12 @@ public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "uuid", unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String uuid;
     private String userState;
-    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
-    private PersonalInfo user;
-
-    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
-    private Contract contract;
-
-    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
-    private ExtraData extraData;
-
-    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
-    private PersonalInfo approver;
+    private String personalInfo;
+    private String contract;
+    private String extraData;
+    @Nullable
+    private Boolean approver;
 }

@@ -28,7 +28,7 @@ public class StateServiceImpl implements StateService {
     public UserDto addUser(final String personalInfoDto) {
         final UserDto userDto = UserDto.builder()
                 .uuid(generator.getUUID())
-                .user(personalInfoDto)
+                .personalInfo(personalInfoDto)
                 .build();
         return tryToSend(topicCreate, userDto);
     }
@@ -36,8 +36,9 @@ public class StateServiceImpl implements StateService {
     @Override
     public Mono<UserDto> edit(final ChangeRequestDto changeRequestDto) {
         return stateApiAdaptor.findUser(changeRequestDto.getUuid().toString())
-                .map(userDto -> userDto.setExtraDataDto(changeRequestDto.getExtraDataDto()))
-                .map(userDto -> userDto.setContractDto(changeRequestDto.getContractDto()))
+                .map(userDto -> userDto.setExtraData(changeRequestDto.getExtraData()))
+                .map(userDto -> userDto.setApprover(changeRequestDto.isApprover()))
+                .map(userDto -> userDto.setContract(changeRequestDto.getContract()))
                 .checkpoint()
                 .map(userDto -> tryToSend(topicCreate, userDto));
     }

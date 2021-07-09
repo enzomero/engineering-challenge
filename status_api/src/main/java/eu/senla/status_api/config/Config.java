@@ -44,7 +44,7 @@ public class Config {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, UserDto> user_stock() {
+    public ConcurrentKafkaListenerContainerFactory<String, UserDto> userStock() {
         ConcurrentKafkaListenerContainerFactory<String, UserDto> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(listener());
