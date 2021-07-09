@@ -1,4 +1,4 @@
-#Engineering lead challenge
+# Engineering lead challenge
 
 <details><summary>The issue</summary>
 <p>
@@ -50,7 +50,7 @@ A high-level architecture diagram is sufficient to present this.
 </details>
 
 ## Solution
-###[Q]Being simply executable with the least effort Ideally using Docker and docker-compose or any smailiar approach.
+### [Q]Being simply executable with the least effort Ideally using Docker and docker-compose or any smailiar approach.
 
 For launch the solutions you might use docker, go to the root folder and use the command:
 
@@ -68,7 +68,7 @@ You may check result, it should looks like:
 We have here status_gate - is the service which listens all requests and sends to next node, status-api - is the service
 which saves our data in database. 
 
-###[Q] For state machine could be as simple as of using ENUM
+### [Q] For state machine could be as simple as of using ENUM
 
 Еhe state machine was implemented as [enum](status_gate/src/main/java/eu/senla/status_gate/dto/UserState.java). The state 
 machine change state according a data for particular fields, if those fields have non `null` value. 
@@ -82,12 +82,12 @@ machine change state according a data for particular fields, if those fields hav
       |_if ACTIVE user gets update, recheck the state_|
 
 
-###[Q] Please provide testing for your solution.
+### [Q] Please provide testing for your solution.
 
 Unfortunately I have not enough time to make integration of unit tests, but I made Postman collection for UAT testing
 [import this collection](postman_uat/status_service.postman_collection.json).
 
-###[Q] Providing an API Contract e.g. OPENAPI spec. is a big plus
+### [Q] Providing an API Contract e.g. OPENAPI spec. is a big plus
 We have 2 endpoints:
 * First one for creation a user with minimal data, as default state will be ADDED
     ```
@@ -103,7 +103,7 @@ We have 2 endpoints:
     ```
 Base flow of the service described here below in sequence diagrams
 
-###Sequence diagram of creation user
+#### Sequence diagram of creation user
 
                 status_gate                    kafka                   status_api
     (Minimal data)    |                          |                          |
@@ -115,7 +115,7 @@ Base flow of the service described here below in sequence diagrams
                       |                          |                          |
 
 
-###Sequence diagram of update user
+#### Sequence diagram of update user
 
                 status_gate                    kafka                   status_api
     part of data      |                          |                          |
@@ -132,13 +132,13 @@ Base flow of the service described here below in sequence diagrams
                       |                          |                          |
 
 
-###[Q] Suggest what will be your silver bullet, concerns while you're reviewing this part of the software that you need to make sure is being there.
+### [Q] Suggest what will be your silver bullet, concerns while you're reviewing this part of the software that you need to make sure is being there.
 
 The implementation too fragile because I don't have enough business flow to build state machine easier. In perfect world
 we should have one entity for each state, it will help us to keep flexibility of data structures
 I don't have minimal layer of testing, as unit testing and integration testing. 
 
-###[Q] What the production-readiness criteria that you consider for this solution
+### [Q] What the production-readiness criteria that you consider for this solution
 
 We need to integrate with front-end, security, reorganize data according to real data, correct the business flow.
 Lack of general knowledge to discuss production-readiness. The main questions are:
@@ -147,7 +147,7 @@ Lack of general knowledge to discuss production-readiness. The main questions ar
 * Data structures
 * CI/CD
 
-###[Q] Please think of a solution without any further implementation that could be able to integrate on top of your service,including the integration pattern will be used, the database storage etc.
+### [Q] Please think of a solution without any further implementation that could be able to integrate on top of your service,including the integration pattern will be used, the database storage etc.
 
 We use kafka as async message que because we may listen all passed messages for gathering 
 statistics or metrics (which might be easily integrated as external solution).
